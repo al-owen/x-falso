@@ -1,28 +1,24 @@
+import MainHeader from './components/MainHeader.jsx';
+import PostsList from './components/PostsList.jsx'
 import { useState } from 'react'
-import Post from './components/Post.jsx'
-import './App.css'
-import NewPost from './components/NewPost.jsx'
+function App(){
+  const [modalIsEnabled, setModalIsEnabled] = useState(false)
 
-function App() {
-  const [autor, setAutor] = useState('')
-  const [contenido, setContenido] = useState('')
-
-  function handleAutorChange(e){
-    setAutor(e.target.value)
+  function handleShowModal(e){
+    setModalIsEnabled(true)
+  }
+  function handleHideModal(e){
+    setModalIsEnabled(false)
   }
 
-  function handleContentChange(e){
-    setContenido(e.target.value)
-  }
-
-
-  return (
+  return(
     <>
-      <NewPost changeEvent={handleAutorChange} changeContentEvent={handleContentChange}/>
-      <Post autor={autor} contenido={contenido}/>
-      <Post autor="Alvaro" contenido="Hola Mundo 2" />
+    <MainHeader onCreatePost={handleShowModal}/>
+    <main>
+      <PostsList modalIsEnabled={modalIsEnabled} onStopPosting={handleHideModal}/>
+    </main>
     </>
-  )
+  );
 }
 
 export default App
