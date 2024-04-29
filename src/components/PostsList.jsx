@@ -9,8 +9,7 @@ function App({modalIsEnabled, onStopPosting}) {
   const [posts, setPosts] = useState([])
 
   function handleAddPost(postData) {
-    posts.push(postData)
-    setPosts(posts)
+    setPosts(posts => [...posts, postData])
   }
 
   return (
