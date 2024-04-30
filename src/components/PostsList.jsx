@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import classes from './PostsList.module.css'
 import '../App.css'
 import Post from './Post.jsx'
@@ -8,7 +8,25 @@ import NewPost from './NewPost.jsx'
 function App({modalIsEnabled, onStopPosting}) {
   const [posts, setPosts] = useState([])
 
+  useEffect(() => {
+    async function handleGetPost() {
+      const response = await fetch('http://localhost:8080/posts')
+      const data = await response.json()
+      setPosts(data.posts)  
+    }
+    handleGetPost()
+  }, [])
+  
+  
+  
   function handleAddPost(postData) {
+    fetch('http://localhost:8080/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
+    })
     setPosts(posts => [...posts, postData])
   }
 
